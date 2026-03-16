@@ -561,6 +561,8 @@ body {
   aspect-ratio: 1920 / 1040;
   position: sticky;
   top: 0;
+  padding-bottom: 200px;
+  box-sizing: content-box;
 }
 
 /* Header: border-t flex row — label (left) + headline (right) */
