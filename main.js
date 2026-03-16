@@ -164,11 +164,22 @@ slides.forEach(s => observer.observe(s));
     { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.09 },
   ];
 
+  // Capture each tag's natural center position relative to the diagram center.
+  // This is the offset we need to subtract so translate(tx,ty)=0 means "at cursor".
   var groups = GROUPS.map(function (g) {
+    var tagEl   = diagram.querySelector(g.tag);
+    var arrowEl = diagram.querySelector(g.arrow);
+    var naturalX = 0, naturalY = 0;
+    if (tagEl) {
+      var dr  = diagram.getBoundingClientRect();
+      var tr  = tagEl.getBoundingClientRect();
+      naturalX = (tr.left + tr.width  * 0.5) - (dr.left + dr.width  * 0.5);
+      naturalY = (tr.top  + tr.height * 0.5) - (dr.top  + dr.height * 0.5);
+    }
     return {
-      tag:    diagram.querySelector(g.tag),
-      arrow:  diagram.querySelector(g.arrow),
+      tag: tagEl, arrow: arrowEl,
       factor: g.factor,
+      naturalX: naturalX, naturalY: naturalY,
       x: 0, y: 0,
       tx: 0, ty: 0,
     };
@@ -177,20 +188,21 @@ slides.forEach(s => observer.observe(s));
   var raf    = null;
   var inside = false;
 
-  var MAX_PX = 120;
-
   document.addEventListener('mousemove', function (e) {
     var r        = slide.getBoundingClientRect();
     var isInside = e.clientX >= r.left && e.clientX <= r.right &&
                    e.clientY >= r.top  && e.clientY <= r.bottom;
 
     if (isInside) {
-      var dr = diagram.getBoundingClientRect();
-      var cx = e.clientX - (dr.left + dr.width  * 0.5);
-      var cy = e.clientY - (dr.top  + dr.height * 0.5);
-      cx = Math.max(-MAX_PX, Math.min(MAX_PX, cx));
-      cy = Math.max(-MAX_PX, Math.min(MAX_PX, cy));
-      groups.forEach(function (g) { g.tx = cx; g.ty = cy; });
+      // Cursor position relative to diagram center
+      var dr  = diagram.getBoundingClientRect();
+      var cx  = e.clientX - (dr.left + dr.width  * 0.5);
+      var cy  = e.clientY - (dr.top  + dr.height * 0.5);
+      // Each tag's target = how far it needs to move FROM its natural spot TO the cursor
+      groups.forEach(function (g) {
+        g.tx = cx - g.naturalX;
+        g.ty = cy - g.naturalY;
+      });
       inside = true;
     } else if (inside) {
       groups.forEach(function (g) { g.tx = 0; g.ty = 0; });
