@@ -749,9 +749,6 @@ body {
 #slide-process {
   background: #f5ccfb;
   aspect-ratio: 1920 / 1221;
-  position: sticky;
-  top: 0;
-  z-index: 2;
 }
 
 .process-label {
