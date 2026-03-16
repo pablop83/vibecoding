@@ -62,6 +62,7 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
+  z-index: 1;
   /* Maintain 1920:1040 aspect ratio */
   aspect-ratio: 1920 / 1040;
   min-height: 420px;
@@ -197,6 +198,9 @@ body {
   aspect-ratio: unset;
   height: 100vh;
   min-height: 600px;
+  position: sticky;
+  top: 0;
+  z-index: 0;
 }
 
 .cover-content {
