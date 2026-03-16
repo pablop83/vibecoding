@@ -641,7 +641,7 @@ body {
 .rol-box-outer {
   position: absolute;
   inset: 0;
-  border: 1.5px solid #151515;
+  border: 2px solid #151515;
   border-radius: clamp(10px, 1.25vw, 24px);
   padding: clamp(10px, 1.35vw, 26px);
 }
