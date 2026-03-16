@@ -185,8 +185,10 @@ slides.forEach(s => observer.observe(s));
     };
   });
 
-  var raf    = null;
-  var inside = false;
+  var raf       = null;
+  var inside    = false;
+  var enterTime = 0;        // timestamp when cursor entered the section
+  var DELAY_MS  = 2000;     // wait 2 s before elements start following
 
   document.addEventListener('mousemove', function (e) {
     var r        = slide.getBoundingClientRect();
@@ -194,16 +196,21 @@ slides.forEach(s => observer.observe(s));
                    e.clientY >= r.top  && e.clientY <= r.bottom;
 
     if (isInside) {
-      // Cursor position relative to diagram center
-      var dr  = diagram.getBoundingClientRect();
-      var cx  = e.clientX - (dr.left + dr.width  * 0.5);
-      var cy  = e.clientY - (dr.top  + dr.height * 0.5);
-      // Each tag's target = how far it needs to move FROM its natural spot TO the cursor
-      groups.forEach(function (g) {
-        g.tx = cx - g.naturalX;
-        g.ty = cy - g.naturalY;
-      });
-      inside = true;
+      if (!inside) {
+        inside    = true;
+        enterTime = performance.now(); // record when we entered
+      }
+
+      // Only start following after the 2 s delay has passed
+      if (performance.now() - enterTime >= DELAY_MS) {
+        var dr = diagram.getBoundingClientRect();
+        var cx = e.clientX - (dr.left + dr.width  * 0.5);
+        var cy = e.clientY - (dr.top  + dr.height * 0.5);
+        groups.forEach(function (g) {
+          g.tx = cx - g.naturalX;
+          g.ty = cy - g.naturalY;
+        });
+      }
     } else if (inside) {
       groups.forEach(function (g) { g.tx = 0; g.ty = 0; });
       inside = false;
