@@ -235,6 +235,58 @@ slides.forEach(s => observer.observe(s));
   }
 }());
 
+// ── Rol tags: idle random scramble ───────────────────────────────────────────
+// Each role-tag text scrambles to random chars then resolves back, independently
+// and at random intervals so they feel organic rather than choreographed.
+(function () {
+  var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@&%';
+  var TAGS  = ['.rol-tag-researcher', '.rol-tag-developer',
+               '.rol-tag-photographer', '.rol-tag-copywriter'];
+
+  function randChar() {
+    return CHARS[Math.floor(Math.random() * CHARS.length)];
+  }
+
+  function scrambleTag(el, original) {
+    var chars  = original.split('');
+    var iters  = 0;
+    var maxIter = chars.length + 4;
+    var frame;
+
+    function step() {
+      iters++;
+      var out = chars.map(function (ch, i) {
+        // Letters settle one by one from left to right
+        if (i < iters - 4) return ch;
+        return ch === ' ' ? ' ' : randChar();
+      }).join('');
+      el.textContent = out;
+      if (iters <= maxIter) {
+        frame = setTimeout(step, 45);
+      } else {
+        el.textContent = original; // fully resolved
+        scheduleNext(el, original);
+      }
+    }
+    step();
+  }
+
+  function scheduleNext(el, original) {
+    // Random pause between 3 and 9 seconds before next scramble
+    var delay = 3000 + Math.random() * 6000;
+    setTimeout(function () { scrambleTag(el, original); }, delay);
+  }
+
+  TAGS.forEach(function (sel) {
+    var el = document.querySelector(sel);
+    if (!el) return;
+    var original = el.textContent.trim();
+    // Stagger initial scramble so they don't all fire at once
+    var initDelay = Math.random() * 4000;
+    setTimeout(function () { scrambleTag(el, original); }, initDelay);
+  });
+}());
+
 // Nav click smooth scroll
 const slideMap = {
   0: 'slide-cambio',
