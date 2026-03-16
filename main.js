@@ -133,7 +133,17 @@ slides.forEach(s => observer.observe(s));
     });
   }
 
-  window.addEventListener('scroll', update, { passive: true });
+  // Use Lenis scroll event if available (syncs with smoothed position),
+  // fall back to native scroll for safety
+  function bindScroll() {
+    if (window.lenis) {
+      window.lenis.on('scroll', update);
+    } else {
+      window.addEventListener('scroll', update, { passive: true });
+    }
+  }
+  // Lenis is initialised after this script, so wait one tick
+  setTimeout(bindScroll, 0);
   window.addEventListener('resize', update, { passive: true });
   update();
 }());
@@ -226,6 +236,12 @@ const slideMap = {
 navItems.forEach((item, i) => {
   item.addEventListener('click', () => {
     const target = document.getElementById(slideMap[i]);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    if (!target) return;
+    // Use Lenis for smooth scroll if available, otherwise fall back
+    if (window.lenis) {
+      window.lenis.scrollTo(target, { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 4) });
+    } else {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
   });
 });
