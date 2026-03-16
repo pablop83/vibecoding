@@ -156,12 +156,13 @@ slides.forEach(s => observer.observe(s));
   var diagram = document.querySelector('.rol-diagram');
   if (!slide || !diagram) return;
 
-  // Higher factor = faster / closer to cursor
+  // Each element has its own lerp speed + a personal orbit offset (ox, oy)
+  // so they spread around the cursor instead of all converging to the same point.
   var GROUPS = [
-    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.18 },
-    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.13 },
-    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.09 },
-    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.06 },
+    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.18, ox:  30, oy: -25 },
+    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.11, ox: -40, oy:  20 },
+    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.07, ox: -20, oy: -40 },
+    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.05, ox:  45, oy:  30 },
   ];
 
   var groups = GROUPS.map(function (g) {
@@ -169,31 +170,33 @@ slides.forEach(s => observer.observe(s));
       tag:    diagram.querySelector(g.tag),
       arrow:  diagram.querySelector(g.arrow),
       factor: g.factor,
-      x: 0, y: 0,   // current rendered position
-      tx: 0, ty: 0, // target position
+      ox: g.ox, oy: g.oy,
+      x: 0, y: 0,
+      tx: 0, ty: 0,
     };
   });
 
-  var raf     = null;
-  var inside  = false;
+  var raf    = null;
+  var inside = false;
 
-  var MAX_PX = 100; // max travel from natural position
+  var MAX_PX = 120;
 
-  // Listen on document so no child element can block the event
   document.addEventListener('mousemove', function (e) {
     var r        = slide.getBoundingClientRect();
     var isInside = e.clientX >= r.left && e.clientX <= r.right &&
                    e.clientY >= r.top  && e.clientY <= r.bottom;
 
     if (isInside) {
-      // Map cursor to ±MAX_PX relative to diagram center
       var dr = diagram.getBoundingClientRect();
       var cx = e.clientX - (dr.left + dr.width  * 0.5);
       var cy = e.clientY - (dr.top  + dr.height * 0.5);
-      // Clamp so elements don't fly outside diagram bounds
       cx = Math.max(-MAX_PX, Math.min(MAX_PX, cx));
       cy = Math.max(-MAX_PX, Math.min(MAX_PX, cy));
-      groups.forEach(function (g) { g.tx = cx; g.ty = cy; });
+      // Each element targets cursor + its own personal offset
+      groups.forEach(function (g) {
+        g.tx = cx + g.ox;
+        g.ty = cy + g.oy;
+      });
       inside = true;
     } else if (inside) {
       groups.forEach(function (g) { g.tx = 0; g.ty = 0; });
