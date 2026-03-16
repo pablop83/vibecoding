@@ -205,6 +205,18 @@ body {
   z-index: 0;
 }
 
+/* Desaturation overlay — strips the colour cast produced by the exclusion
+   blend on the title/nav/footer, making them appear black instead of green */
+#slide-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #808080;
+  mix-blend-mode: saturation;
+  pointer-events: none;
+  z-index: 1000;
+}
+
 .cover-content {
   position: absolute;
   left: 0;
