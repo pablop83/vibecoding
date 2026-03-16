@@ -75,6 +75,8 @@ body {
   left: 0;
   width: 100%;
   mix-blend-mode: exclusion;
+  backdrop-filter: saturate(0);
+  color: #ffffff;
   height: 88px;
   display: flex;
   align-items: center;
@@ -96,6 +98,7 @@ body {
   right: 1.93%;
   display: flex;
   mix-blend-mode: exclusion;
+  backdrop-filter: saturate(0);
   align-items: flex-start;
   justify-content: space-between;
   z-index: 10;
@@ -205,17 +208,6 @@ body {
   z-index: 0;
 }
 
-/* Desaturation overlay — strips the colour cast produced by the exclusion
-   blend on the title/nav/footer, making them appear black instead of green */
-#slide-cover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #808080;
-  mix-blend-mode: saturation;
-  pointer-events: none;
-  z-index: 1000;
-}
 
 .cover-content {
   position: absolute;
@@ -234,7 +226,8 @@ body {
   line-height: 0.85;
   letter-spacing: -0.04em;
   mix-blend-mode: exclusion;
-  color: #f4c4fa;
+  backdrop-filter: saturate(0);
+  color: #ffffff;
   width: min(50.16vw, 963px);
   min-width: clamp(200px, 60%, 963px);
 }
