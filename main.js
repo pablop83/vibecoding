@@ -235,6 +235,64 @@ slides.forEach(s => observer.observe(s));
   }
 }());
 
+// ── Typewriter effect on scroll ──────────────────────────────────────────────
+// Captures each element's text, clears it, then types it back char-by-char
+// when the element enters the viewport.
+(function () {
+  var SPEED_MS = 16; // ms per character — fast typewriter
+
+  var SELECTORS = [
+    '.cambio-card-text',
+    '.paradigma-subtext',
+    '.paradigma-cards-subtext',
+    '.quote-body',
+    '.rol-body',
+    '.process-label-before',
+    '.process-label-after',
+  ];
+
+  function initEl(el) {
+    // innerText preserves \n from <br> tags
+    var full = el.innerText;
+    var hasNewlines = full.indexOf('\n') >= 0;
+    el.innerHTML = '';
+    el._twFull = full;
+    el._twHasNewlines = hasNewlines;
+  }
+
+  function typewrite(el) {
+    var full = el._twFull;
+    var hasNewlines = el._twHasNewlines;
+    var i = 0;
+    var iv = setInterval(function () {
+      i++;
+      var partial = full.slice(0, i);
+      if (hasNewlines) {
+        el.innerHTML = partial.replace(/\n/g, '<br>');
+      } else {
+        el.textContent = partial;
+      }
+      if (i >= full.length) clearInterval(iv);
+    }, SPEED_MS);
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        typewrite(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  SELECTORS.forEach(function (sel) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      initEl(el);
+      observer.observe(el);
+    });
+  });
+}());
+
 // ── Rol tags: idle random scramble ───────────────────────────────────────────
 // Each role-tag text scrambles to random chars then resolves back, independently
 // and at random intervals so they feel organic rather than choreographed.
