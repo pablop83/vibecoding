@@ -8,8 +8,8 @@
 
 @font-face {
   font-family: 'NHaasGroteskTX';
-  src: url('./fonts/NHaasGroteskTXPro-75Bd.ttf') format('truetype');
-  font-weight: 700;
+  src: url('./fonts/NHaasGroteskTXPro-65Md.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -673,7 +673,7 @@ body {
   padding: clamp(4px, 0.41vw, 8px) clamp(6px, 0.48vw, 9px);
   border-radius: clamp(3px, 0.28vw, 5px);
   font-size: clamp(8px, 0.625vw, 12px);
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #151515;
