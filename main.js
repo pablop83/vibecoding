@@ -148,80 +148,74 @@ slides.forEach(s => observer.observe(s));
   update();
 }());
 
-// ── Rol diagram: cursor following (replicates GSAP stagger technique) ────────
-// Each group tweens to the cursor position with a staggered start, using
-// power3.out easing — same as gsap.to(els, { stagger: 0.15, ease: 'power3.out' })
+// ── Rol diagram: cursor following (quickTo-style continuous lerp) ─────────────
+// Each element has its own lerp factor — faster = closer to cursor.
+// Every frame: x += (target - x) * factor  →  replicates gsap.quickTo behaviour.
 (function () {
+  var slide   = document.getElementById('slide-rol');
   var diagram = document.querySelector('.rol-diagram');
-  if (!diagram) return;
+  if (!slide || !diagram) return;
 
-  var DURATION_MS = 500;
-  var STAGGER_MS  = 60;
-
-  // Stagger order: fastest/first → slowest/last
+  // Higher factor = faster / closer to cursor
   var GROUPS = [
-    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    stagger: 0 },
-    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   stagger: 1 },
-    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   stagger: 2 },
-    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', stagger: 3 },
+    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.18 },
+    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.13 },
+    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.09 },
+    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.06 },
   ];
-
-  // power3.out easing
-  function ease(t) { return 1 - Math.pow(1 - t, 3); }
 
   var groups = GROUPS.map(function (g) {
     return {
-      tag:   diagram.querySelector(g.tag),
-      arrow: diagram.querySelector(g.arrow),
-      delayMs:   g.stagger * STAGGER_MS,
+      tag:    diagram.querySelector(g.tag),
+      arrow:  diagram.querySelector(g.arrow),
+      factor: g.factor,
       x: 0, y: 0,   // current rendered position
-      sx: 0, sy: 0, // tween start position
-      tx: 0, ty: 0, // tween target position
-      fireAt:    -1,
-      startTime: -1,
+      tx: 0, ty: 0, // target position
     };
   });
 
-  var raf = null;
+  var raf     = null;
+  var inside  = false;
 
-  function triggerTween(cx, cy) {
-    var now = performance.now();
-    groups.forEach(function (g) {
-      g.tx = cx; g.ty = cy;
-      g.sx = g.x; g.sy = g.y;
-      g.startTime = -1;
-      g.fireAt = now + g.delayMs;
-    });
+  var MAX_PX = 100; // max travel from natural position
+
+  // Listen on document so no child element can block the event
+  document.addEventListener('mousemove', function (e) {
+    var r        = slide.getBoundingClientRect();
+    var isInside = e.clientX >= r.left && e.clientX <= r.right &&
+                   e.clientY >= r.top  && e.clientY <= r.bottom;
+
+    if (isInside) {
+      // Map cursor to ±MAX_PX relative to diagram center
+      var dr = diagram.getBoundingClientRect();
+      var cx = e.clientX - (dr.left + dr.width  * 0.5);
+      var cy = e.clientY - (dr.top  + dr.height * 0.5);
+      // Clamp so elements don't fly outside diagram bounds
+      cx = Math.max(-MAX_PX, Math.min(MAX_PX, cx));
+      cy = Math.max(-MAX_PX, Math.min(MAX_PX, cy));
+      groups.forEach(function (g) { g.tx = cx; g.ty = cy; });
+      inside = true;
+    } else if (inside) {
+      groups.forEach(function (g) { g.tx = 0; g.ty = 0; });
+      inside = false;
+    } else {
+      return;
+    }
+
     if (!raf) raf = requestAnimationFrame(tick);
-  }
-
-  diagram.addEventListener('mousemove', function (e) {
-    var r = diagram.getBoundingClientRect();
-    triggerTween(e.clientX - r.left - r.width * 0.5,
-                 e.clientY - r.top  - r.height * 0.5);
   });
 
-  diagram.addEventListener('mouseleave', function () { triggerTween(0, 0); });
-
-  function tick(now) {
-    var allDone = true;
+  function tick() {
+    var settled = true;
     groups.forEach(function (g) {
-      if (g.fireAt < 0) return;
-      if (now < g.fireAt) { allDone = false; return; }
-      if (g.startTime < 0) { g.startTime = now; g.sx = g.x; g.sy = g.y; }
-
-      var t  = Math.min((now - g.startTime) / DURATION_MS, 1.0);
-      var et = ease(t);
-      g.x = g.sx + (g.tx - g.sx) * et;
-      g.y = g.sy + (g.ty - g.sy) * et;
-
+      g.x += (g.tx - g.x) * g.factor;
+      g.y += (g.ty - g.y) * g.factor;
       var tr = 'translate(' + g.x.toFixed(2) + 'px,' + g.y.toFixed(2) + 'px)';
       if (g.tag)   g.tag.style.transform = tr;
       if (g.arrow) g.arrow.style.transform = tr;
-
-      if (t < 1.0) allDone = false;
+      if (Math.abs(g.tx - g.x) > 0.3 || Math.abs(g.ty - g.y) > 0.3) settled = false;
     });
-    raf = allDone ? null : requestAnimationFrame(tick);
+    raf = settled ? null : requestAnimationFrame(tick);
   }
 }());
 
