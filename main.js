@@ -156,13 +156,12 @@ slides.forEach(s => observer.observe(s));
   var diagram = document.querySelector('.rol-diagram');
   if (!slide || !diagram) return;
 
-  // Each element has its own lerp speed + a personal orbit offset (ox, oy)
-  // so they spread around the cursor instead of all converging to the same point.
+  // All elements chase the cursor directly — different speeds create the trail.
   var GROUPS = [
-    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.18, ox:  30, oy: -25 },
-    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.11, ox: -40, oy:  20 },
-    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.07, ox: -20, oy: -40 },
-    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.05, ox:  45, oy:  30 },
+    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.28 },
+    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.20 },
+    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.14 },
+    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.09 },
   ];
 
   var groups = GROUPS.map(function (g) {
@@ -170,7 +169,6 @@ slides.forEach(s => observer.observe(s));
       tag:    diagram.querySelector(g.tag),
       arrow:  diagram.querySelector(g.arrow),
       factor: g.factor,
-      ox: g.ox, oy: g.oy,
       x: 0, y: 0,
       tx: 0, ty: 0,
     };
@@ -192,11 +190,7 @@ slides.forEach(s => observer.observe(s));
       var cy = e.clientY - (dr.top  + dr.height * 0.5);
       cx = Math.max(-MAX_PX, Math.min(MAX_PX, cx));
       cy = Math.max(-MAX_PX, Math.min(MAX_PX, cy));
-      // Each element targets cursor + its own personal offset
-      groups.forEach(function (g) {
-        g.tx = cx + g.ox;
-        g.ty = cy + g.oy;
-      });
+      groups.forEach(function (g) { g.tx = cx; g.ty = cy; });
       inside = true;
     } else if (inside) {
       groups.forEach(function (g) { g.tx = 0; g.ty = 0; });
