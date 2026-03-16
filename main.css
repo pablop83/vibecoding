@@ -747,6 +747,9 @@ body {
 #slide-process {
   background: #f5ccfb;
   aspect-ratio: 1920 / 1221;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .process-label {
@@ -856,6 +859,9 @@ body {
   background: #f5ccfb;
   /* Figma: 1920 × 800px */
   aspect-ratio: 1920 / 800;
+  position: sticky;
+  top: 0;
+  z-index: 3;
   min-height: 0; /* override .slide min-height — let aspect-ratio drive it */
   /* no position:relative override — inherited from .slide */
 }
