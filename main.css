@@ -812,12 +812,12 @@ body {
 }
 
 .process-flow-before {
-  left: calc(37.5% + 168px);
+  right: clamp(16px, 1.82vw, 35px);
   top: 61.1%; /* 746/1221 */
 }
 
 .process-flow-after {
-  left: calc(25% + 167px);
+  right: clamp(16px, 1.82vw, 35px);
   top: 74.8%;
 }
 
