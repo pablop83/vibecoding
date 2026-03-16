@@ -566,6 +566,8 @@ body {
 #slide-rol-spacer {
   height: 300px;
   background: #ececec;
+  position: relative;
+  z-index: 2;
 }
 
 /* Header: border-t flex row — label (left) + headline (right) */
