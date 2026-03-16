@@ -561,13 +561,14 @@ body {
   aspect-ratio: 1920 / 1040;
   position: sticky;
   top: 0;
+  z-index: 3;
 }
 
 #slide-rol-spacer {
   height: 300px;
   background: #ececec;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 /* Header: border-t flex row — label (left) + headline (right) */
