@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI para Branding en ++</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="main.css?v=16" />
+  <!-- Preloader + scramble text effect -->
+  <script defer src="preloader.js"></script>
+  <!-- Three.js for hero effects (Bayer dithering bg + pixel-reveal) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script defer src="bayer-effect.js"></script>
+  <script defer src="hero-effect.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 1 – COVER
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-cover">
+  <!-- WebGL pixel-reveal canvas — sits on top, removed after animation -->
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Bayer dithering canvas injected by bayer-effect.js as first child -->
+
+  <!-- Nav bar -->
+  <nav class="nav-bar">
+    <div class="nav-logo">
+      <img src="assets/logo.svg" alt="++ logo" />
+    </div>
+    <div class="nav-menu">
+      <div class="nav-item active">El Cambio</div>
+      <div class="nav-item">Rol del diseñador</div>
+      <div class="nav-item">Procesos</div>
+      <div class="nav-item">Nuestra Postura</div>
+    </div>
+  </nav>
+
+  <!-- Title + footer -->
+  <div class="cover-content">
+    <div style="padding: 0 clamp(12px,1.25vw,24px);">
+      <p class="cover-title">AI para Branding en ++</p>
+    </div>
+    <div class="footer" style="position:relative; color:#f4c4fa;">
+      <span class="footer-left">Internal document ©2026</span>
+      <span class="footer-center">AI Talks</span>
+      <span class="footer-right">Marzo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 2 – EL CAMBIO
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-cambio">
+  <p class="slide-label cambio-label">El cambio que estamos viviendo</p>
+
+  <div class="cambio-headline">
+    <p>AI no es una herramienta más.</p>
+    <p>Es un cambio en cómo se crean productos.</p>
+    <p>Es un cambio estructural en la industria creativa.</p>
+  </div>
+
+  <div class="cambio-cards">
+    <div class="cambio-card">
+      <div class="cambio-card-dot"></div>
+      <p class="cambio-card-text">Cambia cómo producimos</p>
+    </div>
+    <div class="cambio-card">
+      <div class="cambio-card-dot"></div>
+      <p class="cambio-card-text">Cambia cómo vendemos</p>
+    </div>
+    <div class="cambio-card">
+      <div class="cambio-card-dot"></div>
+      <p class="cambio-card-text">Cambia lo que esperan los clientes</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 3 – PARADIGMA TEXT
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-paradigma-text">
+  <p class="slide-label paradigma-label">Un cambio de paradigma</p>
+
+  <p class="paradigma-headline">
+    La marca deja de ser solo un sistema visual y pasa a ser también un sistema operativo para máquinas.
+  </p>
+
+  <p class="paradigma-subtext">
+    Tradicionalmente diseñamos marcas para humanos. Pero en la era de AI las marcas también necesitan ser entendidas por máquinas.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 4 – PARADIGMA CARDS (For Humans / For Machines)
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-paradigma-cards">
+  <!-- Label header with top border (Figma: border-t solid black + pt-24px) -->
+  <div class="paradigma-cards-header">
+    <p class="slide-label">Un cambio de paradigma</p>
+  </div>
+
+  <p class="paradigma-cards-subtext">
+    Tradicionalmente diseñamos marcas para humanos. Pero en la era de AI las marcas también necesitan ser entendidas por máquinas.
+  </p>
+
+  <div class="brand-cards-container">
+    <!-- For Humans -->
+    <div class="brand-card">
+      <div class="brand-card-header">
+        <div class="brand-card-title-row">
+          <p class="brand-card-title">For Humans</p>
+          <img class="brand-card-icon" src="assets/for-humans.svg" alt="For Humans icon" />
+        </div>
+        <p class="brand-card-desc">Estos assets ayudan a personas a producir diseño consistente.</p>
+      </div>
+      <ul class="brand-card-list">
+        <li>Logo system</li>
+        <li>Brand guidelines</li>
+        <li>Typography &amp; color systems</li>
+        <li>Photography direction</li>
+        <li>Illustration style</li>
+        <li>Website &amp; UI components</li>
+        <li>Motion principles</li>
+      </ul>
+    </div>
+    <!-- For Machines -->
+    <div class="brand-card">
+      <div class="brand-card-header">
+        <div class="brand-card-title-row">
+          <p class="brand-card-title">For Machines</p>
+          <img class="brand-card-icon" src="assets/for-machines.svg" alt="For Machines icon" style="width:clamp(40px,4.95vw,95px);" />
+        </div>
+        <p class="brand-card-desc">Estos assets ayudan a personas a producir diseño consistente.</p>
+      </div>
+      <ul class="brand-card-list">
+        <li>Tone of voice datasets</li>
+        <li>Brand Strategy</li>
+        <li>Prompt Libraries</li>
+        <li>Visual generation guidelines for AI</li>
+        <li>Image style models</li>
+        <li>Structured brand knowledge for AI agents</li>
+        <li>Content generation frameworks</li>
+        <li>AI agents trained on brand voice and brand rules</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 5 – QUOTE
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-quote">
+  <!-- Header: border-t + pt-40px containing the headline (Figma: border-t pt-[40px]) -->
+  <div class="quote-header">
+    <p class="quote-headline">
+      "The design process is dead. Why designers can no longer trust it."
+    </p>
+  </div>
+
+  <img class="quote-avatar" src="assets/jenny-wen.webp" alt="Jenny Wen" loading="lazy" />
+
+  <p class="quote-body">
+    "If you can one-shot prompt something that looks like this, what does that mean for designers? It raises the floor, your work has to be better than this to be valuable."
+  </p>
+
+  <div class="quote-attribution">
+    <span>Jenny Wen, HOD, Anthropic -
+      <a href="https://youtu.be/4u94juYwLLM?si=XerzHKaD0p8pTjv_" target="_blank" rel="noopener">Hatch Conference</a>
+    </span>
+    <span class="arrow-ext">↗</span>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 6 – ROL DEL DISEÑADOR
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-rol">
+  <!-- Header: border-t flex row — label (left) + headline (right) -->
+  <div class="rol-header">
+    <p class="slide-label">El rol del diseñador en la era de AI</p>
+    <div class="rol-headline">
+      <p>La AI no reemplaza al diseñador.</p>
+      <p>Cambia cómo se crea.</p>
+    </div>
+  </div>
+
+  <!-- Body row: text (left) + diagram + deliverables (right) -->
+  <div class="rol-body-row">
+    <p class="rol-body">
+      El diseño pasa de ser un proceso lineal a un proceso de co-creación con herramientas inteligentes.<br/><br/>
+      El diseñador ya no trabaja solo.<br/>
+      Trabaja junto a sistemas que generan, proponen y exploran opciones.
+    </p>
+
+    <div class="rol-right">
+      <!-- AI / Human diagram — role tags live inside, relative to diagram -->
+      <div class="rol-diagram">
+        <!-- Outer AI box (label only — no tags inside) -->
+        <div class="rol-box-outer">
+          <p class="rol-ai-label">Artificial Intelligence</p>
+        </div>
+        <!-- Inner Human box -->
+        <div class="rol-box-inner">
+          <p class="rol-human-label">Human</p>
+        </div>
+        <!-- Role tags as siblings of both boxes → render on top (Figma: 205:192–205:208) -->
+        <div class="role-tag rol-tag-researcher">Researcher</div>
+        <svg class="role-arrow rol-arrow-researcher" viewBox="0 0 18.4018 19.1367" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.49709 0.123595C0.699338 -0.30393 -0.21684 0.447125 0.045901 1.31324L5.23414 18.416C5.49422 19.2733 6.65636 19.3981 7.09257 18.6156L10.0082 13.3849L10.0353 13.3418C10.1655 13.1346 10.3661 12.9814 10.6002 12.9104L17.681 10.7624C18.5461 10.4999 18.6627 9.32289 17.8659 8.89588L1.49709 0.123595Z" fill="#F0C5F6"/></svg>
+        <div class="role-tag rol-tag-developer">Developer</div>
+        <svg class="role-arrow rol-arrow-developer" viewBox="0 0 18.4018 19.1367" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.49709 0.123595C0.699338 -0.30393 -0.21684 0.447125 0.045901 1.31324L5.23414 18.416C5.49422 19.2733 6.65636 19.3981 7.09257 18.6156L10.0082 13.3849L10.0353 13.3418C10.1655 13.1346 10.3661 12.9814 10.6002 12.9104L17.681 10.7624C18.5461 10.4999 18.6627 9.32289 17.8659 8.89588L1.49709 0.123595Z" fill="#F0C5F6"/></svg>
+        <div class="role-tag rol-tag-photographer">Photographer</div>
+        <svg class="role-arrow rol-arrow-photographer" viewBox="0 0 18.4018 19.1367" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.49709 0.123595C0.699338 -0.30393 -0.21684 0.447125 0.045901 1.31324L5.23414 18.416C5.49422 19.2733 6.65636 19.3981 7.09257 18.6156L10.0082 13.3849L10.0353 13.3418C10.1655 13.1346 10.3661 12.9814 10.6002 12.9104L17.681 10.7624C18.5461 10.4999 18.6627 9.32289 17.8659 8.89588L1.49709 0.123595Z" fill="#F0C5F6"/></svg>
+        <div class="role-tag rol-tag-copywriter">Copywriter</div>
+        <svg class="role-arrow rol-arrow-copywriter" viewBox="0 0 18.4018 19.1367" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.49709 0.123595C0.699338 -0.30393 -0.21684 0.447125 0.045901 1.31324L5.23414 18.416C5.49422 19.2733 6.65636 19.3981 7.09257 18.6156L10.0082 13.3849L10.0353 13.3418C10.1655 13.1346 10.3661 12.9814 10.6002 12.9104L17.681 10.7624C18.5461 10.4999 18.6627 9.32289 17.8659 8.89588L1.49709 0.123595Z" fill="#F0C5F6"/></svg>
+      </div>
+
+      <!-- Deliverable cards (stacked, with icons inside) -->
+      <div class="rol-deliverables">
+        <div class="rol-deliverable-card">
+          <div class="rol-del-text"><p>Human</p><p>Deliverables</p></div>
+          <img class="rol-del-icon" src="assets/ellipse.svg" alt="" />
+        </div>
+        <div class="rol-deliverable-card">
+          <div class="rol-del-text"><p>Machine</p><p>Deliverables</p></div>
+          <img class="rol-del-icon rol-del-icon-poly" src="assets/polygon.svg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 7 – PROCESS FLOWS
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-process">
+  <p class="slide-label process-label">El rol del diseñador en la era de AI</p>
+
+  <p class="process-headline">La AI permite trabajar de otra manera.</p>
+
+  <!-- Divider top (before) -->
+  <div class="process-divider process-divider-top"></div>
+
+  <!-- "Before" label -->
+  <p class="process-label-before">
+    Antes el proceso era lineal, un diseñador exploraba pocas direcciones a la vez.
+  </p>
+
+  <!-- BEFORE flow: Ideación → Diseño → Iteración → Resultado -->
+  <div class="process-flow process-flow-before">
+    <div class="process-chip">Ideación</div>
+    <div class="process-arrow-chip">→</div>
+    <div class="process-chip">Diseño</div>
+    <div class="process-arrow-chip">→</div>
+    <div class="process-chip">Iteración</div>
+    <div class="process-arrow-chip">→</div>
+    <div class="process-chip">Resultado</div>
+  </div>
+
+  <!-- Divider bottom (after) -->
+  <div class="process-divider process-divider-bottom"></div>
+
+  <!-- "After" label -->
+  <p class="process-label-after">
+    Ahora se vuelve más exploratorio, podemos explorar muchas direcciones en paralelo.<br/><br/>
+    &nbsp;&nbsp;• Múltiples estilos visuales<br/>
+    &nbsp;&nbsp;• Variaciones de composición<br/>
+    &nbsp;&nbsp;• Exploraciones fotográficas<br/>
+    &nbsp;&nbsp;• Direcciones de arte alternativas
+  </p>
+
+  <!-- AFTER flow: Ideación → Generación Masiva → Curaduría → Refinamiento -->
+  <div class="process-flow process-flow-after">
+    <div class="process-chip">Ideación</div>
+    <div class="process-arrow-chip">→</div>
+    <div class="process-chip">Generación Masiva</div>
+    <div class="process-arrow-chip">→</div>
+    <div class="process-chip">Curaduría</div>
+    <div class="process-arrow-chip">→</div>
+    <div class="process-chip">Refinamiento</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 8 – THANKS
+════════════════════════════════════════════ -->
+<section class="slide" id="slide-thanks">
+  <div class="thanks-content">
+    <svg class="thanks-img" preserveAspectRatio="none" viewBox="0 0 1844.57 449.175" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Thanks">
+      <g class="thanks-letter" style="--i:0"><path d="M0 0H356.506V70.2389H218.98V439.14H136.936V70.2389H0V0Z" fill="#151515"/></g>
+      <g class="thanks-letter" style="--i:1"><path d="M446.892 118.048C446.892 122.377 446.695 129.853 446.302 140.478C446.302 150.709 446.105 160.349 445.711 169.4H447.482C458.106 152.479 471.289 139.297 487.028 129.853C503.162 120.409 522.443 115.688 544.872 115.688C579.106 115.688 605.667 125.525 624.555 145.2C643.836 164.481 653.477 191.239 653.477 225.473V439.14H578.516V237.868C578.516 218.98 573.204 204.224 562.579 193.6C552.349 182.975 537.592 177.663 518.311 177.663C507.687 177.663 498.046 179.63 489.389 183.565C480.732 187.107 473.256 192.419 466.96 199.502C460.664 206.191 455.745 214.258 452.204 223.702C448.663 233.146 446.892 243.377 446.892 254.394V439.14H371.931V0H446.892V118.048Z" fill="#151515"/></g>
+      <g class="thanks-letter" style="--i:2"><path d="M888.315 439.14C885.56 435.599 883.199 430.68 881.232 424.384C879.658 417.695 878.477 409.038 877.69 398.414H876.51C866.279 412.186 853.49 423.794 838.144 433.238C822.798 442.288 802.533 446.813 777.349 446.813C762.003 446.813 747.64 444.846 734.262 440.911C721.276 436.976 710.062 431.074 700.618 423.204C691.174 415.334 683.697 405.693 678.188 394.282C672.68 382.477 669.925 368.901 669.925 353.555C669.925 335.848 673.073 321.289 679.369 309.877C686.058 298.072 695.109 288.629 706.52 281.546C717.931 274.463 731.507 269.151 747.247 265.609C762.987 261.674 780.3 258.526 799.188 256.165C825.159 253.017 844.637 248.689 857.622 243.18C870.608 237.277 877.1 227.243 877.1 213.077C877.1 199.305 872.378 188.287 862.934 180.024C853.491 171.761 839.325 167.629 820.437 167.629C799.188 167.629 783.252 172.154 772.627 181.204C762.396 190.255 756.888 202.65 756.101 218.39H685.271C685.665 205.011 688.616 192.222 694.125 180.024C700.027 167.432 708.488 156.414 719.505 146.97C730.917 137.526 744.886 130.05 761.413 124.541C777.939 118.639 797.417 115.688 819.847 115.688C837.947 115.688 853.884 117.065 867.656 119.819C881.822 122.574 894.02 127.296 904.251 133.985C934.157 152.086 949.11 181.991 949.11 223.702V389.56C949.11 402.545 950.094 412.579 952.061 419.662C954.422 426.745 957.373 431.467 960.915 433.828V439.14H888.315ZM799.188 395.462C812.174 395.462 823.585 393.495 833.422 389.56C843.26 385.232 851.523 379.919 858.212 373.623C864.902 366.934 870.017 359.458 873.559 351.194C877.1 342.537 878.871 333.684 878.871 324.633V278.004C871.395 282.726 862.147 286.858 851.13 290.399C840.112 293.547 828.897 296.302 817.486 298.663C794.27 302.991 776.366 308.697 763.774 315.78C751.182 322.469 744.886 334.471 744.886 351.784C744.886 360.048 746.263 367.131 749.018 373.033C752.166 378.542 756.101 383.067 760.822 386.609C765.938 389.757 771.84 392.118 778.53 393.692C785.219 394.872 792.105 395.462 799.188 395.462Z" fill="#151515"/></g>
+      <g class="thanks-letter" style="--i:3"><path d="M1056.18 169.99H1057.95C1068.19 152.283 1081.37 138.904 1097.5 129.853C1114.03 120.409 1133.51 115.688 1155.93 115.688C1190.17 115.688 1216.73 125.525 1235.62 145.2C1254.9 164.481 1264.54 191.239 1264.54 225.473V439.14H1189.58V237.868C1189.58 218.98 1184.27 204.224 1173.64 193.6C1163.41 182.975 1148.65 177.663 1129.37 177.663C1118.75 177.663 1109.11 179.63 1100.45 183.565C1091.79 187.107 1084.32 192.419 1078.02 199.502C1071.73 206.191 1066.81 214.258 1063.27 223.702C1059.72 233.146 1057.95 243.377 1057.95 254.394V439.14H982.993V123.951H1056.18V169.99Z" fill="#151515"/></g>
+      <g class="thanks-letter" style="--i:4"><path d="M1406.71 288.038L1369.52 325.224V439.14H1295.15V0H1369.52V169.99C1369.52 184.943 1369.13 199.305 1368.34 213.077C1367.95 226.85 1367.56 238.261 1367.16 247.312L1485.8 123.951H1574.93L1459.24 239.048L1588.5 439.14H1501.15L1406.71 288.038Z" fill="#151515"/></g>
+      <g class="thanks-letter" style="--i:5"><path d="M1709.99 449.174C1664.74 449.174 1629.52 439.337 1604.34 419.662C1579.55 399.988 1565.97 374.214 1563.61 342.341H1635.62C1638.77 361.228 1647.03 375.001 1660.41 383.658C1673.79 391.921 1690.51 396.053 1710.58 396.053C1731.44 396.053 1746.78 392.118 1756.62 384.248C1766.46 375.984 1771.38 365.557 1771.38 352.965C1771.38 345.095 1769.41 338.799 1765.47 334.077C1761.54 328.962 1756.03 324.83 1748.95 321.682C1741.87 318.141 1733.21 315.386 1722.98 313.419C1713.14 311.058 1702.12 308.697 1689.92 306.336C1674.97 303.581 1660.61 300.237 1646.84 296.302C1633.06 292.367 1620.87 287.055 1610.24 280.365C1599.62 273.282 1590.96 264.232 1584.27 253.214C1577.97 241.803 1574.83 227.243 1574.83 209.536C1574.83 194.583 1577.78 181.401 1583.68 169.99C1589.98 158.185 1598.44 148.348 1609.06 140.478C1620.08 132.214 1633.26 126.115 1648.61 122.18C1663.95 117.852 1680.87 115.688 1699.37 115.688C1741.47 115.688 1773.15 124.344 1794.4 141.658C1816.04 158.578 1828.83 180.811 1832.76 208.356H1761.34C1755.83 180.417 1734.98 166.448 1698.78 166.448C1681.07 166.448 1667.69 169.99 1658.64 177.073C1649.98 184.156 1645.66 193.206 1645.66 204.224C1645.66 211.307 1647.62 217.012 1651.56 221.341C1655.49 225.669 1661 229.408 1668.08 232.555C1675.17 235.31 1683.63 237.671 1693.47 239.638C1703.3 241.606 1714.12 243.77 1725.93 246.131C1740.88 248.886 1755.44 252.23 1769.61 256.165C1783.77 259.707 1796.36 265.216 1807.38 272.692C1818.79 279.775 1827.84 289.416 1834.53 301.614C1841.22 313.419 1844.57 328.962 1844.57 348.243C1844.57 364.77 1841.22 379.329 1834.53 391.921C1827.84 404.513 1818.4 415.137 1806.2 423.794C1794.4 432.057 1780.23 438.353 1763.7 442.682C1747.18 447.01 1729.27 449.174 1709.99 449.174Z" fill="#151515"/></g>
+    </svg>
+    <div class="thanks-footer">
+      <span class="footer-left">Internal document ©2026</span>
+      <span class="footer-center">AI Talks</span>
+      <span class="footer-right">Marzo</span>
+    </div>
+  </div>
+</section>
+
+<script src="main.js"></script>
+</body>
+</html>
