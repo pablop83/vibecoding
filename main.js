@@ -158,10 +158,10 @@ slides.forEach(s => observer.observe(s));
 
   // All elements chase the cursor directly — different speeds create the trail.
   var GROUPS = [
-    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.08 },
-    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.05 },
-    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.03 },
-    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.015 },
+    { tag: '.rol-tag-developer',    arrow: '.rol-arrow-developer',    factor: 0.04 },
+    { tag: '.rol-tag-copywriter',   arrow: '.rol-arrow-copywriter',   factor: 0.025 },
+    { tag: '.rol-tag-researcher',   arrow: '.rol-arrow-researcher',   factor: 0.015 },
+    { tag: '.rol-tag-photographer', arrow: '.rol-arrow-photographer', factor: 0.007 },
   ];
 
   // Capture each tag's natural center position relative to the diagram center.
