@@ -188,7 +188,7 @@ slides.forEach(s => observer.observe(s));
   var raf       = null;
   var inside    = false;
   var enterTime = 0;        // timestamp when cursor entered the section
-  var DELAY_MS  = 1000;     // wait 1 s before elements start following
+  var DELAY_MS  = 300;      // wait 0.3 s before elements start following
 
   document.addEventListener('mousemove', function (e) {
     var r        = slide.getBoundingClientRect();
