@@ -239,7 +239,7 @@ slides.forEach(s => observer.observe(s));
 // Captures each element's text, clears it, then types it back char-by-char
 // when the element enters the viewport.
 (function () {
-  var SPEED_MS = 16; // ms per character — fast typewriter
+  var SPEED_MS = 6; // ms per character — fast typewriter
 
   var SELECTORS = [
     '.cambio-card-text',
