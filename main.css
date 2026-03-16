@@ -561,7 +561,11 @@ body {
   aspect-ratio: 1920 / 1040;
   position: sticky;
   top: 0;
-  margin-bottom: 300px;
+}
+
+#slide-rol-spacer {
+  height: 300px;
+  background: #ececec;
 }
 
 /* Header: border-t flex row — label (left) + headline (right) */
