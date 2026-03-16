@@ -74,6 +74,7 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
+  mix-blend-mode: exclusion;
   height: 88px;
   display: flex;
   align-items: center;
@@ -94,6 +95,7 @@ body {
   left: 1.93%;
   right: 1.93%;
   display: flex;
+  mix-blend-mode: exclusion;
   align-items: flex-start;
   justify-content: space-between;
   z-index: 10;
@@ -219,6 +221,7 @@ body {
   font-size: clamp(40px, 11.46vw, 220px);
   line-height: 0.85;
   letter-spacing: -0.04em;
+  mix-blend-mode: exclusion;
   color: #f4c4fa;
   width: min(50.16vw, 963px);
   min-width: clamp(200px, 60%, 963px);
