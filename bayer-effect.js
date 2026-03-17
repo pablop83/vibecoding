@@ -115,14 +115,14 @@
     '}'
   ].join('\n');
 
-  /* ── Init ───────────────────────────────────────────────────────── */
-  function init() {
-    var slide = document.getElementById('slide-cover');
+  /* ── Factory ─────────────────────────────────────────────────────── */
+  function initBayer(slideId, canvasId, blobColor) {
+    var slide = document.getElementById(slideId);
     if (!slide || typeof THREE === 'undefined') return;
 
-    /* Create & insert canvas as first child (below nav, title, hero-canvas) */
+    /* Create & insert canvas as first child */
     var canvas = document.createElement('canvas');
-    canvas.id = 'bayer-canvas';
+    canvas.id = canvasId;
     canvas.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;';
     slide.insertBefore(canvas, slide.firstChild);
 
@@ -143,7 +143,7 @@
     for (var i = 0; i < MAX_TRAIL; i++) trailPos.push(new THREE.Vector2(-99999, -99999));
 
     var uniforms = {
-      uColor:       { value: new THREE.Color('#F4C4FA') },
+      uColor:       { value: new THREE.Color(blobColor) },
       uResolution:  { value: new THREE.Vector2(W, H)   },
       uTime:        { value: 0.0  },
       uPixelSize:   { value: 3.0  },
@@ -220,6 +220,11 @@
       uniforms.uResolution.value.set(W, H);
       uniforms.uMouse.value.set(W * 0.5, H * 0.5);
     });
+  }
+
+  function init() {
+    initBayer('slide-cover',  'bayer-canvas',        '#F4C4FA');
+    initBayer('slide-thanks', 'bayer-canvas-thanks', '#000000');
   }
 
   if (document.readyState === 'loading') {
