@@ -122,7 +122,7 @@
       uContainerRes: { value: new THREE.Vector2(W, H) },
       uProgress:     { value: 0.0 },
       uTileColor:    { value: new THREE.Color('#F0C5F6') },
-      uBgColor:      { value: new THREE.Color('#000000') },
+      uBgColor:      { value: new THREE.Color('#151515') },
     };
 
     var mat  = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms: uniforms, transparent: true });

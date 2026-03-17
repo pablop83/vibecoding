@@ -230,7 +230,7 @@
 
   function init() {
     initBayer('slide-cover',  'bayer-canvas',        '#F4C4FA', 0,   12.0);
-    initBayer('slide-thanks', 'bayer-canvas-thanks', '#000000', 350, 20.0);
+    initBayer('slide-thanks', 'bayer-canvas-thanks', '#151515', 350, 20.0);
   }
 
   if (document.readyState === 'loading') {

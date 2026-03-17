@@ -194,7 +194,7 @@ body {
 }
 
 #slide-cover {
-  background: #000000; /* pure black — Bayer dithering pink sits on top */
+  background: #151515; /* near-black — Bayer dithering pink sits on top */
   aspect-ratio: unset;
   height: 100vh;
   min-height: 600px;
