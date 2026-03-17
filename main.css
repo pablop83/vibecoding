@@ -514,9 +514,9 @@ body {
 .quote-avatar {
   position: absolute;
   left: clamp(16px, 1.875vw, 36px);
-  top: 73%;     /* nudged down from 70.87% to match Figma's more generous whitespace */
-  width: clamp(60px, 8.9vw, 171px);
-  height: clamp(60px, 8.9vw, 171px);
+  top: 73%;
+  width: clamp(60px, 8.9vw, 8.9vw);
+  height: clamp(60px, 8.9vw, 8.9vw);
   border-radius: 12px;
   overflow: hidden;
   object-fit: cover;
@@ -524,7 +524,7 @@ body {
 
 .quote-body {
   position: absolute;
-  left: calc(12.5% + 3px); /* 207px from slide left at 1920px (avatar 171 + ~36px gap) */
+  left: calc(1.875vw + 8.9vw + 2.083vw); /* avatar-left + avatar-width + gap, all in vw */
   top: 73%;
   width: clamp(200px, 43.13vw, 828px);
   font-size: clamp(13px, 1.67vw, 32px);
@@ -535,8 +535,8 @@ body {
 
 .quote-attribution {
   position: absolute;
-  left: calc(12.5% + 3px);
-  top: 87.1%;   /* 73% + 147/1040*100 = 87.1% */
+  left: calc(1.875vw + 8.9vw + 2.083vw);
+  top: 87.1%;
   display: flex;
   align-items: center;
   gap: 8px;
