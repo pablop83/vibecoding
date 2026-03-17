@@ -116,14 +116,16 @@
   ].join('\n');
 
   /* ── Factory ─────────────────────────────────────────────────────── */
-  function initBayer(slideId, canvasId, blobColor) {
+  // extend: extra pixels to add above the slide (canvas grows upward)
+  function initBayer(slideId, canvasId, blobColor, extend) {
+    extend = extend || 0;
     var slide = document.getElementById(slideId);
     if (!slide || typeof THREE === 'undefined') return;
 
-    /* Create & insert canvas as first child */
+    /* Create & insert canvas — offset upward by `extend` px so blob can overflow */
     var canvas = document.createElement('canvas');
     canvas.id = canvasId;
-    canvas.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;';
+    canvas.style.cssText = 'position:absolute;top:-' + extend + 'px;left:0;pointer-events:none;';
     slide.insertBefore(canvas, slide.firstChild);
 
     var W = slide.offsetWidth;
@@ -131,7 +133,7 @@
 
     var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
     renderer.setPixelRatio(1); /* 1:1 keeps dithering pixels sharp at native size */
-    renderer.setSize(W, H);
+    renderer.setSize(W, H + extend);
 
     var scene  = new THREE.Scene();
     var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -144,7 +146,7 @@
 
     var uniforms = {
       uColor:       { value: new THREE.Color(blobColor) },
-      uResolution:  { value: new THREE.Vector2(W, H)   },
+      uResolution:  { value: new THREE.Vector2(W, H + extend) },
       uTime:        { value: 0.0  },
       uPixelSize:   { value: 3.0  },
       uMouse:       { value: new THREE.Vector2(W * 0.5, H * 0.5) },
@@ -216,15 +218,15 @@
     /* ── Resize ──────────────────────────────────────────────────── */
     window.addEventListener('resize', function () {
       W = slide.offsetWidth; H = slide.offsetHeight;
-      renderer.setSize(W, H);
-      uniforms.uResolution.value.set(W, H);
+      renderer.setSize(W, H + extend);
+      uniforms.uResolution.value.set(W, H + extend);
       uniforms.uMouse.value.set(W * 0.5, H * 0.5);
     });
   }
 
   function init() {
-    initBayer('slide-cover',  'bayer-canvas',        '#F4C4FA');
-    initBayer('slide-thanks', 'bayer-canvas-thanks', '#000000');
+    initBayer('slide-cover',  'bayer-canvas',        '#F4C4FA', 0);
+    initBayer('slide-thanks', 'bayer-canvas-thanks', '#000000', 350);
   }
 
   if (document.readyState === 'loading') {
