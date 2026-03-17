@@ -88,6 +88,8 @@
     '  // Each trail point is a Gaussian blob. Nearby blobs add up →',
     '  // their overlap region exceeds the dither threshold → solid fill.',
     '  // This makes blobs merge/flow like liquid as the cursor moves.',
+    'uniform float uBlobSize;',
+    '',
     '  float trail = 0.0;',
     '  for (int i = 0; i < MAX_TRAIL; i++) {',
     '    vec2 pos = uTrailPos[i];',
@@ -96,7 +98,7 @@
     '    float age = max(uTime - uTrailTimes[i], 0.0);',
     '    float d   = distance(cuv, tuv);',
     '    // Blob: Gaussian in space, exponential decay in time',
-    '    trail += exp(-d * 12.0) * exp(-age * 0.45);',
+    '    trail += exp(-d * uBlobSize) * exp(-age * 0.45);',
     '  }',
     '  trail = clamp(trail, 0.0, 1.0);',
     '  feed  = max(feed, trail);',
@@ -104,7 +106,7 @@
     '  // ── Live cursor: tight leading blob (always at front of trail)',
     '  vec2  muv      = ((uMouse - uResolution*0.5) / uResolution) * vec2(ar, 1.0);',
     '  float mdist    = distance(cuv, muv);',
-    '  float cursor   = exp(-mdist * 12.0) * 1.1 * uMouseActive;',
+    '  float cursor   = exp(-mdist * uBlobSize) * 1.1 * uMouseActive;',
     '  feed = max(feed, cursor);',
     '',
     '  // ── Bayer8 ordered dithering → binary mask ─────────────────',
@@ -117,8 +119,9 @@
 
   /* ── Factory ─────────────────────────────────────────────────────── */
   // extend: extra pixels to add above the slide (canvas grows upward)
-  function initBayer(slideId, canvasId, blobColor, extend) {
-    extend = extend || 0;
+  function initBayer(slideId, canvasId, blobColor, extend, blobSize) {
+    extend   = extend   || 0;
+    blobSize = blobSize || 12.0;
     var slide = document.getElementById(slideId);
     if (!slide || typeof THREE === 'undefined') return;
 
@@ -151,6 +154,7 @@
       uPixelSize:   { value: 3.0  },
       uMouse:       { value: new THREE.Vector2(W * 0.5, H * 0.5) },
       uMouseActive: { value: 0.0  },
+      uBlobSize:    { value: blobSize   },
       uTrailPos:    { value: trailPos   },
       uTrailTimes:  { value: trailTimes },
     };
@@ -225,8 +229,8 @@
   }
 
   function init() {
-    initBayer('slide-cover',  'bayer-canvas',        '#F4C4FA', 0);
-    initBayer('slide-thanks', 'bayer-canvas-thanks', '#000000', 350);
+    initBayer('slide-cover',  'bayer-canvas',        '#F4C4FA', 0,   12.0);
+    initBayer('slide-thanks', 'bayer-canvas-thanks', '#000000', 350, 20.0);
   }
 
   if (document.readyState === 'loading') {
